@@ -1,7 +1,7 @@
 //***********************************************************************************************
 // Universidad del Valle de Guatemala
-// IE2023: Programación de Microcontroladores
-// Autor: Héctor Martínez - 22369
+// IE2023: ProgramaciÃ³n de Microcontroladores
+// Autor: HÃ©ctor MartÃ­nez - 22369
 // Proyecto: postlab 6
 // Hardware: atmega328p
 //***********************************************************************************************
@@ -26,11 +26,11 @@ int main(void)
 {
 	USART_init(); // Inicializa USART
 	ADC_init();  // Inicializar ADC
-	char buffer[20]; // Búfer para conversión de cadenas
+	char buffer[20]; // BÃºfer para conversiÃ³n de cadenas
 
 	while(1)
 	{
-// Menú
+// MenÃº
 		USART_putstring("Menu:\n");
 		USART_putstring("1. Leer potenciometro\n");
 		USART_putstring("2. Enviar ASCII\n");
@@ -42,24 +42,24 @@ int main(void)
 
 		if (option == '1')
 		{
-//Lee el valor del potenciómetro
-			uint16_t pot_value = ADC_read(0); // potenciómetro conectado al pin A0
+//Lee el valor del potenciÃ³metro
+			uint16_t pot_value = ADC_read(0); // potenciÃ³metro conectado al pin A0
 
-// Convertir el valor del potenciómetro a cadena
+// Convertir el valor del potenciÃ³metro a cadena
 			sprintf(buffer, "Valor del potenciometro: %d\n", pot_value);
 
-//Envía el valor del potenciómetro 
+//EnvÃ­a el valor del potenciÃ³metro 
 			USART_putstring(buffer);
 		}
 		else if (option == '2')
 		{
 //Enviar ASCII
 			USART_putstring("Enviando ASCII...\n");
-			USART_send('A'); // Example: Send 'A' character
+			USART_send('A'); 
 		}
 		else
 		{
-// Opción inválida
+// OpciÃ³n invÃ¡lida
 			USART_putstring("Opcion invalida. Ingrese 1 o 2.\n");
 		}
 
@@ -110,13 +110,13 @@ void ADC_init()
 
 uint16_t ADC_read(uint8_t ch)
 {
-// Selecciona el canal ADC con máscara de seguridad
+// Selecciona el canal ADC con mÃ¡scara de seguridad
 	ADMUX = (ADMUX & 0xF0) | (ch & 0x0F);
 
-// Iniciar conversión única
+// Iniciar conversiÃ³n Ãºnica
 	ADCSRA |= (1 << ADSC);
 
-// Espera a que se complete la conversión
+// Espera a que se complete la conversiÃ³n
 	while (ADCSRA & (1 << ADSC));
 
 // Devuelve el valor ADC
